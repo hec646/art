@@ -1,0 +1,1431 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>手繪藝術 — 中國戲曲刮刀厚塗油畫訂製 | 20×30cm・30×40cm 典藏訂製</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts: Noto Serif TC & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Noto+Serif+TC:wght@400;600;700;900&display=swap" rel="stylesheet">
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ink: {
+              950: '#0b0a09',
+              900: '#141210',
+              800: '#1f1c18',
+              700: '#2e2923',
+            },
+            vermilion: {
+              500: '#c83e2b',
+              600: '#a82e1e',
+              700: '#872215',
+            },
+            gold: {
+              300: '#e6c88c',
+              400: '#d4af37',
+              500: '#b89228',
+            },
+            peacock: {
+              500: '#1b6d7a',
+              400: '#288f9e',
+            }
+          },
+          fontFamily: {
+            serif: ['"Noto Serif TC"', 'serif'],
+            sans: ['"Inter"', '"Noto Serif TC"', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      background-color: #0b0a09;
+      color: #f3efe6;
+      font-family: 'Inter', 'Noto Serif TC', sans-serif;
+      overflow-x: hidden;
+    }
+    .font-oriental {
+      font-family: 'Noto Serif TC', serif;
+    }
+    /* 亞麻畫布肌理背景 */
+    .canvas-texture {
+      background-color: #161412;
+      background-image: 
+        radial-gradient(rgba(212, 175, 55, 0.06) 1px, transparent 0),
+        radial-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 0);
+      background-size: 24px 24px;
+      background-position: 0 0, 12px 12px;
+    }
+    /* 金色細線邊框與光暈 */
+    .gold-border {
+      border: 1px solid rgba(212, 175, 55, 0.28);
+    }
+    .gold-border-hover:hover {
+      border-color: rgba(212, 175, 55, 0.75);
+      box-shadow: 0 10px 30px -10px rgba(212, 175, 55, 0.2);
+    }
+    /* 刮刀油畫厚塗模擬筆觸特效 */
+    .impasto-badge {
+      background: linear-gradient(135deg, #c83e2b 0%, #872215 100%);
+      box-shadow: 2px 3px 0px rgba(212, 175, 55, 0.4);
+    }
+    /* 自訂捲軸 */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #141210;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #3d352e;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #d4af37;
+    }
+    /* 畫框模擬樣式 */
+    .frame-walnut {
+      border: 14px solid #3c2415;
+      box-shadow: inset 0 0 12px rgba(0,0,0,0.85), 0 20px 40px rgba(0,0,0,0.75);
+      outline: 2px solid #593822;
+    }
+    .frame-black {
+      border: 14px solid #181818;
+      box-shadow: inset 0 0 12px rgba(0,0,0,0.9), 0 20px 40px rgba(0,0,0,0.8);
+      outline: 1px solid #333;
+    }
+    .frame-canvas {
+      border: none;
+      box-shadow: 6px 6px 0px #2a2520, 0 20px 35px rgba(0,0,0,0.75);
+    }
+  </style>
+</head>
+<body class="selection:bg-vermilion-500 selection:text-white">
+
+  <!-- 頂部通知橫幅：本地影片快速載入與 GitHub 路徑提示 -->
+  <div id="top-banner" class="bg-gradient-to-r from-ink-900 via-vermilion-700/40 to-ink-900 border-b border-gold-400/20 py-2 px-4 text-xs sm:text-sm">
+    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2">
+      <div class="flex items-center gap-2 text-gold-300">
+        <span class="px-2 py-0.5 rounded bg-vermilion-600 text-white font-medium text-xs">GitHub 雙路徑相容</span>
+        <span>已內建 <code class="text-white bg-black/40 px-1.5 py-0.5 rounded">video_1.mp4 ~ video_8.mp4</code> 根目錄與 <code class="text-white bg-black/40 px-1.5 py-0.5 rounded">assets/</code> 雙重備援</span>
+      </div>
+      <div class="flex items-center gap-3">
+        <label for="local-video-picker" class="cursor-pointer inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-gold-400/15 hover:bg-gold-400/25 text-gold-300 border border-gold-400/40 transition text-xs font-medium">
+          <i class="fa-solid fa-folder-open"></i> 載入本機影片即時預覽
+        </label>
+        <input id="local-video-picker" type="file" accept="video/mp4,video/*" multiple class="hidden" />
+        <button onclick="toggleDeployModal()" class="inline-flex items-center gap-1 text-stone-300 hover:text-gold-400 transition text-xs underline underline-offset-4">
+          <i class="fa-brands fa-github"></i> GitHub 上傳檢測指南
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 導覽列 Sticky Header -->
+  <header class="sticky top-0 z-40 backdrop-blur-md bg-ink-950/85 border-b border-gold-400/20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      <!-- 品牌標誌 -->
+      <a href="#" class="flex items-center gap-3 group">
+        <div class="w-11 h-11 rounded-lg impasto-badge flex items-center justify-center text-white font-oriental font-bold text-xl tracking-widest group-hover:scale-105 transition">
+          戲
+        </div>
+        <div>
+          <span class="font-oriental text-xl sm:text-2xl font-bold tracking-wider text-stone-100 block leading-none">
+            手繪藝術 <span class="text-gold-400 font-normal text-base">| 中國戲曲</span>
+          </span>
+          <span class="text-[11px] tracking-[0.2em] text-stone-400 uppercase mt-1 block">
+            Palette Knife Oil Painting Custom
+          </span>
+        </div>
+      </a>
+
+      <!-- 桌面端導覽連結 -->
+      <nav class="hidden md:flex items-center gap-7 text-sm font-medium text-stone-300">
+        <a href="#gallery" class="hover:text-gold-400 transition">8大實拍創作影音</a>
+        <a href="#craft" class="hover:text-gold-400 transition">刮刀厚塗工藝</a>
+        <a href="#size-comparator" class="hover:text-gold-400 transition">20×30 / 30×40 尺寸比對</a>
+        <a href="#custom-order" class="hover:text-gold-400 transition">線上訂製預約</a>
+        <button onclick="toggleDeployModal()" class="text-gold-300 hover:text-gold-400 flex items-center gap-1.5">
+          <i class="fa-brands fa-github"></i> 部署與影片檢測
+        </button>
+      </nav>
+
+      <!-- 訂製按鈕 -->
+      <div class="flex items-center gap-3">
+        <a href="#custom-order" class="px-4 py-2.5 rounded-lg bg-vermilion-500 hover:bg-vermilion-600 text-white font-oriental text-sm font-semibold tracking-wider transition shadow-lg shadow-vermilion-500/20 flex items-center gap-2">
+          <i class="fa-solid fa-paintbrush"></i>
+          <span>立即訂製款</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- 主視覺區 Hero Section -->
+  <section class="relative canvas-texture py-12 sm:py-20 border-b border-gold-400/20 overflow-hidden">
+    <!-- 背景東方水墨光暈裝飾 -->
+    <div class="absolute -top-32 -left-32 w-96 h-96 rounded-full bg-vermilion-600/15 blur-3xl pointer-events-none"></div>
+    <div class="absolute top-1/3 -right-32 w-96 h-96 rounded-full bg-peacock-500/15 blur-3xl pointer-events-none"></div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
+        
+        <!-- 左側：東方戲曲文案與訂製規格亮點 -->
+        <div class="lg:col-span-7 space-y-6">
+          <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-ink-800 gold-border text-gold-300 text-xs tracking-widest uppercase">
+            <span class="w-2 h-2 rounded-full bg-vermilion-500 animate-pulse"></span>
+            純手繪亞麻布刮刀油畫・接單訂製款
+          </div>
+
+          <h1 class="font-oriental text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight text-stone-100">
+            以刀代筆，<br />
+            <span class="text-transparent bg-clip-text bg-gradient-to-r from-gold-300 via-gold-400 to-vermilion-500">
+              凝練東方戲曲之魂
+            </span>
+          </h1>
+
+          <p class="text-stone-300 text-base sm:text-lg leading-relaxed max-w-2xl font-light">
+            融合西方油畫<strong class="text-gold-300 font-medium">刮刀厚塗（Impasto）</strong>立體肌理與中國傳統戲曲寫意神韻。畫師先以極細狼毫勾勒生、旦、淨、丑的眉眼靈動，再以油畫刀俐落揮灑出點翠鳳冠、水袖翻飛與靠旗鎧甲的浮雕光影。每一幅皆為獨一無二的手繪真跡。
+          </p>
+
+          <!-- 兩大核心訂製尺寸卡片 -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+            <a href="#size-comparator" onclick="selectComparatorSize('20x30')" class="p-4 rounded-xl bg-ink-900/90 gold-border gold-border-hover transition group cursor-pointer flex items-start justify-between">
+              <div>
+                <span class="text-xs text-gold-400 tracking-widest uppercase block">精緻小品・案頭玄關</span>
+                <h3 class="font-oriental text-2xl font-bold text-white mt-1">20 × 30 cm</h3>
+                <p class="text-xs text-stone-400 mt-1">適合書房案頭、茶席空間、玄關迎賓擺設</p>
+              </div>
+              <span class="w-8 h-8 rounded-full bg-gold-400/10 text-gold-400 flex items-center justify-center group-hover:bg-gold-400 group-hover:text-ink-950 transition">
+                <i class="fa-solid fa-arrow-right text-xs"></i>
+              </span>
+            </a>
+
+            <a href="#size-comparator" onclick="selectComparatorSize('30x40')" class="p-4 rounded-xl bg-ink-900/90 gold-border gold-border-hover transition group cursor-pointer flex items-start justify-between">
+              <div>
+                <span class="text-xs text-vermilion-500 font-semibold tracking-widest uppercase block">經典畫幅・藏家首選</span>
+                <h3 class="font-oriental text-2xl font-bold text-white mt-1">30 × 40 cm</h3>
+                <p class="text-xs text-stone-400 mt-1">適合客廳主牆、藝術長廊、商業空間焦點</p>
+              </div>
+              <span class="w-8 h-8 rounded-full bg-gold-400/10 text-gold-400 flex items-center justify-center group-hover:bg-gold-400 group-hover:text-ink-950 transition">
+                <i class="fa-solid fa-arrow-right text-xs"></i>
+              </span>
+            </a>
+          </div>
+
+          <!-- 行動呼籲按鈕組 -->
+          <div class="flex flex-wrap items-center gap-4 pt-2">
+            <a href="#gallery" class="px-6 py-3.5 rounded-xl bg-gradient-to-r from-vermilion-500 to-vermilion-600 hover:from-vermilion-600 hover:to-vermilion-700 text-white font-oriental font-semibold tracking-wider shadow-lg shadow-vermilion-500/25 transition flex items-center gap-2">
+              <i class="fa-solid fa-circle-play"></i> 鑑賞 8 支實拍刀畫過程
+            </a>
+            <a href="#custom-order" class="px-6 py-3.5 rounded-xl bg-ink-800 hover:bg-ink-700 gold-border text-gold-300 font-oriental font-semibold tracking-wider transition flex items-center gap-2">
+              <i class="fa-solid fa-sliders"></i> 預約專屬尺寸訂製
+            </a>
+          </div>
+        </div>
+
+        <!-- 右側：主視覺精選實拍播放器（支援 8 支影片快速切換） -->
+        <div class="lg:col-span-5 flex flex-col items-center">
+          <div class="w-full max-w-[360px] rounded-2xl bg-ink-900 p-3 gold-border shadow-2xl relative">
+            <!-- 頂部狀態標籤 -->
+            <div class="flex items-center justify-between mb-2 px-1">
+              <span id="hero-video-badge" class="text-xs font-oriental text-gold-300 flex items-center gap-1.5">
+                <i class="fa-solid fa-film text-vermilion-500"></i> 實拍創作 #01：青衣水袖・藍袍旦角
+              </span>
+              <button onclick="toggleHeroMute()" id="hero-mute-btn" class="text-xs px-2.5 py-1 rounded-full bg-ink-800 hover:bg-ink-700 text-stone-300 border border-stone-700 transition flex items-center gap-1">
+                <i class="fa-solid fa-volume-xmark"></i> <span>開啟原聲</span>
+              </button>
+            </div>
+
+            <!-- 9:16 直式實拍影片容器 -->
+            <div class="relative aspect-[9/16] w-full rounded-xl overflow-hidden bg-ink-950 border border-stone-800">
+              <!-- 動態東方刀畫 Canvas 視覺基底（當本地 MP4 尚未部署時自動呈現刀畫意境，部署後由實拍影片覆蓋） -->
+              <canvas id="hero-fallback-canvas" class="absolute inset-0 w-full h-full object-cover"></canvas>
+              
+              <!-- 主視覺實拍 Video 標籤 -->
+              <video id="hero-video" class="relative z-10 w-full h-full object-cover" controls playsinline autoplay loop muted preload="metadata">
+                <source src="video_1.mp4" type="video/mp4">
+                <source src="assets/video_1.mp4" type="video/mp4">
+                <source src="./video_1.mp4" type="video/mp4">
+                <source src="./assets/video_1.mp4" type="video/mp4">
+              </video>
+
+              <!-- 若影片尚未載入時的浮層提示（一旦讀取到影片自動隱藏） -->
+              <div id="hero-fallback-overlay" class="absolute inset-0 z-20 flex flex-col justify-end p-5 bg-gradient-to-t from-black/90 via-black/30 to-transparent pointer-events-none transition-opacity duration-300">
+                <div class="pointer-events-auto bg-ink-900/90 backdrop-blur-md p-3.5 rounded-xl border border-gold-400/30">
+                  <p class="text-xs text-gold-300 font-semibold flex items-center gap-1.5">
+                    <i class="fa-solid fa-circle-info"></i> 預覽模式：等待讀取 <code id="hero-expected-file" class="text-white">video_1.mp4</code>
+                  </p>
+                  <p class="text-[11px] text-stone-300 mt-1 leading-relaxed">
+                    上傳至 GitHub 後將自動播放實拍影片；您也可點擊下方按鈕直接選取電腦中的 8 支影片立即觀看！
+                  </p>
+                  <label for="local-video-picker" class="mt-2 w-full py-1.5 px-3 rounded-lg bg-vermilion-500 hover:bg-vermilion-600 text-white text-xs font-medium flex items-center justify-center gap-1.5 cursor-pointer transition">
+                    <i class="fa-solid fa-upload"></i> 選取本機 video_1 ~ 8.mp4 實拍檔
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <!-- 8 支影片快速切換縮圖列 -->
+            <div class="mt-3">
+              <div class="text-[11px] text-stone-400 mb-1.5 flex items-center justify-between px-1">
+                <span>點擊切換 8 款實拍戲曲刀畫：</span>
+                <span id="hero-index-indicator" class="text-gold-400 font-mono">1 / 8</span>
+              </div>
+              <div class="grid grid-cols-8 gap-1" id="hero-switcher-btns">
+                <!-- 由 JS 動態生成 1~8 切換鈕 -->
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- 8支實拍創作影音畫廊 Video Gallery Section -->
+  <section id="gallery" class="py-16 sm:py-24 bg-ink-950 relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- 區塊標題與控制列 -->
+      <div class="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-6">
+        <div>
+          <span class="text-vermilion-500 font-oriental text-sm tracking-[0.25em] uppercase block mb-2">
+            Authentic Creation Process
+          </span>
+          <h2 class="font-oriental text-3xl sm:text-4xl font-bold text-stone-100">
+            八大經典戲曲・實拍刀畫創作錄
+          </h2>
+          <p class="text-stone-400 text-sm sm:text-base mt-2 max-w-2xl">
+            完整收錄 8 段畫師親手繪製過程。從亞麻畫布上的細筆開臉，到刮刀厚塗孔雀藍、硃砂紅與流金水袖，刀刀俐落、肌理立現。每一款皆可指定 <strong class="text-gold-300">20×30cm</strong> 或 <strong class="text-gold-300">30×40cm</strong> 專屬訂製。
+          </p>
+        </div>
+
+        <!-- 影音全域控制工具列 -->
+        <div class="flex flex-wrap items-center gap-2.5">
+          <button onclick="playAllVideos()" class="px-3.5 py-2 rounded-lg bg-ink-800 hover:bg-ink-700 gold-border text-xs text-stone-200 flex items-center gap-1.5 transition">
+            <i class="fa-solid fa-play text-gold-400"></i> 全部播放
+          </button>
+          <button onclick="pauseAllVideos()" class="px-3.5 py-2 rounded-lg bg-ink-800 hover:bg-ink-700 gold-border text-xs text-stone-200 flex items-center gap-1.5 transition">
+            <i class="fa-solid fa-pause text-stone-400"></i> 全部暫停
+          </button>
+          <label for="local-video-picker" class="px-3.5 py-2 rounded-lg bg-vermilion-500/20 hover:bg-vermilion-500/30 border border-vermilion-500/50 text-xs text-gold-300 flex items-center gap-1.5 cursor-pointer transition">
+            <i class="fa-solid fa-file-video"></i> 載入本地 MP4 檔案
+          </label>
+        </div>
+      </div>
+
+      <!-- 行當分類篩選器 -->
+      <div class="flex flex-wrap items-center gap-2 mb-8 pb-4 border-b border-stone-800" id="category-filters">
+        <button onclick="filterGallery('all')" data-filter="all" class="filter-btn active px-4 py-2 rounded-full text-xs sm:text-sm font-oriental transition bg-gold-400 text-ink-950 font-bold">
+          全部典藏 (8)
+        </button>
+        <button onclick="filterGallery('dan')" data-filter="dan" class="filter-btn px-4 py-2 rounded-full text-xs sm:text-sm font-oriental transition bg-ink-800 text-stone-300 hover:text-gold-300">
+          旦角・青衣水袖 (4)
+        </button>
+        <button onclick="filterGallery('daoma')" data-filter="daoma" class="filter-btn px-4 py-2 rounded-full text-xs sm:text-sm font-oriental transition bg-ink-800 text-stone-300 hover:text-gold-300">
+          刀馬旦・緋紅戎裝 (1)
+        </button>
+        <button onclick="filterGallery('jing')" data-filter="jing" class="filter-btn px-4 py-2 rounded-full text-xs sm:text-sm font-oriental transition bg-ink-800 text-stone-300 hover:text-gold-300">
+          淨角／武聖關公 (2)
+        </button>
+        <button onclick="filterGallery('sheng')" data-filter="sheng" class="filter-btn px-4 py-2 rounded-full text-xs sm:text-sm font-oriental transition bg-ink-800 text-stone-300 hover:text-gold-300">
+          文官老生・丑角神韻 (1)
+        </button>
+      </div>
+
+      <!-- 8 支實拍影片網格容器 -->
+      <div id="video-gallery-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <!-- 由 JavaScript 根據 8 支實拍影片資料渲染 -->
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 刀畫四部曲：工藝解析區 Craft Section -->
+  <section id="craft" class="py-16 sm:py-24 canvas-texture border-y border-gold-400/20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-3xl mx-auto mb-14">
+        <span class="text-gold-400 font-oriental text-sm tracking-[0.25em] uppercase block mb-2">
+          Impasto Palette Knife Technique
+        </span>
+        <h2 class="font-oriental text-3xl sm:text-4xl font-bold text-stone-100">
+          三分畫筆入魂，七分刮刀塑骨
+        </h2>
+        <p class="text-stone-400 text-sm sm:text-base mt-3">
+          不同於平面印刷品，手繪刮刀油畫擁有高達 3~5mm 的立體油彩堆疊厚度。隨室內光線角度變化，戲服衣褶與點翠頭飾會折射出真實的油彩光澤。
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+        <!-- 步驟 1 -->
+        <div class="p-6 rounded-2xl bg-ink-900/90 gold-border relative group hover:-translate-y-1 transition">
+          <div class="w-12 h-12 rounded-xl bg-vermilion-500/20 border border-vermilion-500/40 text-vermilion-500 flex items-center justify-center font-oriental font-bold text-xl mb-4">
+            壹
+          </div>
+          <h3 class="font-oriental text-xl font-bold text-stone-100 mb-2">亞麻原布・細筆開臉</h3>
+          <p class="text-stone-400 text-sm leading-relaxed">
+            選用高密度中粗紋亞麻油畫布，先以極細狼毫畫筆勾勒戲曲人物的丹鳳眼、柳葉眉與臉譜神韻，做到「眉眼傳情、神態入微」。
+          </p>
+          <span class="block mt-4 text-xs text-gold-400 font-oriental">對應實拍：影片 #06、#07 開臉過程</span>
+        </div>
+
+        <!-- 步驟 2 -->
+        <div class="p-6 rounded-2xl bg-ink-900/90 gold-border relative group hover:-translate-y-1 transition">
+          <div class="w-12 h-12 rounded-xl bg-gold-400/20 border border-gold-400/40 text-gold-400 flex items-center justify-center font-oriental font-bold text-xl mb-4">
+            貳
+          </div>
+          <h3 class="font-oriental text-xl font-bold text-stone-100 mb-2">點翠鳳冠・厚塗堆疊</h3>
+          <p class="text-stone-400 text-sm leading-relaxed">
+            運用尖頭小號油畫刮刀，挑取高飽和度油彩，以點、挑、壓技法層層堆疊出繁複的鳳冠絨球、點翠頭飾與武生盔頭，立體感躍然布上。
+          </p>
+          <span class="block mt-4 text-xs text-gold-400 font-oriental">對應實拍：影片 #02 鳳冠點翠特寫</span>
+        </div>
+
+        <!-- 步驟 3 -->
+        <div class="p-6 rounded-2xl bg-ink-900/90 gold-border relative group hover:-translate-y-1 transition">
+          <div class="w-12 h-12 rounded-xl bg-peacock-500/20 border border-peacock-400/40 text-peacock-400 flex items-center justify-center font-oriental font-bold text-xl mb-4">
+            參
+          </div>
+          <h3 class="font-oriental text-xl font-bold text-stone-100 mb-2">以刀代筆・揮灑水袖</h3>
+          <p class="text-stone-400 text-sm leading-relaxed">
+            趁油彩濕潤時，以大號刮刀側鋒一氣呵成刮出孔雀藍青衣、緋紅靠旗與流金水袖，刀鋒轉折間自然形成乾擦飛白與厚重衣褶對比。
+          </p>
+          <span class="block mt-4 text-xs text-gold-400 font-oriental">對應實拍：影片 #01、#03、#04 刀法</span>
+        </div>
+
+        <!-- 步驟 4 -->
+        <div class="p-6 rounded-2xl bg-ink-900/90 gold-border relative group hover:-translate-y-1 transition">
+          <div class="w-12 h-12 rounded-xl bg-gold-400/20 border border-gold-400/40 text-gold-300 flex items-center justify-center font-oriental font-bold text-xl mb-4">
+            肆
+          </div>
+          <h3 class="font-oriental text-xl font-bold text-stone-100 mb-2">自然陰乾・實木裝框</h3>
+          <p class="text-stone-400 text-sm leading-relaxed">
+            厚塗油彩需經數日自然氧化凝固以定型立體肌理，最後嵌入典雅深胡桃木或現代極簡外框，成為可傳世典藏的東方當代藝術品。
+          </p>
+          <span class="block mt-4 text-xs text-gold-400 font-oriental">對應實拍：影片 #08 裝框完品展示</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 互動式尺寸與空間比例比對器 Interactive Size Comparator -->
+  <section id="size-comparator" class="py-16 sm:py-24 bg-ink-950">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+        
+        <!-- 左側：尺寸規格切換與說明 -->
+        <div class="lg:col-span-5 space-y-6">
+          <div>
+            <span class="text-vermilion-500 font-oriental text-sm tracking-[0.25em] uppercase block mb-2">
+              Custom Dimensions & Framing
+            </span>
+            <h2 class="font-oriental text-3xl sm:text-4xl font-bold text-stone-100">
+              訂製尺寸與空間比例預覽
+            </h2>
+            <p class="text-stone-400 text-sm mt-2 leading-relaxed">
+              根據您的擺放空間，我們提供兩種黃金比例手繪畫幅。點擊下方選項，即可在右側空間模擬器中即時預覽實品大小與裝框效果：
+            </p>
+          </div>
+
+          <!-- 1. 選擇尺寸 -->
+          <div class="space-y-3">
+            <label class="text-xs uppercase tracking-wider text-gold-400 block font-semibold">步驟 1：選擇手繪畫布尺寸</label>
+            <div class="grid grid-cols-2 gap-3">
+              <button id="btn-size-20x30" onclick="selectComparatorSize('20x30')" class="p-4 rounded-xl border-2 border-gold-400 bg-gold-400/10 text-left transition">
+                <div class="flex items-center justify-between">
+                  <span class="font-oriental text-xl font-bold text-white">20 × 30 cm</span>
+                  <i class="fa-solid fa-circle-check text-gold-400"></i>
+                </div>
+                <p class="text-xs text-stone-300 mt-1">精緻小品｜約 A4 紙張略長</p>
+                <p class="text-[11px] text-gold-300 mt-1">適合：書桌、博古架、玄關櫃</p>
+              </button>
+
+              <button id="btn-size-30x40" onclick="selectComparatorSize('30x40')" class="p-4 rounded-xl border border-stone-700 bg-ink-900 hover:border-gold-400/50 text-left transition">
+                <div class="flex items-center justify-between">
+                  <span class="font-oriental text-xl font-bold text-white">30 × 40 cm</span>
+                  <i class="fa-regular fa-circle text-stone-500"></i>
+                </div>
+                <p class="text-xs text-stone-300 mt-1">經典畫幅｜面積放大約 2 倍</p>
+                <p class="text-[11px] text-gold-300 mt-1">適合：客廳沙發牆、茶室主牆</p>
+              </button>
+            </div>
+          </div>
+
+          <!-- 2. 選擇畫作主題 -->
+          <div class="space-y-2">
+            <label class="text-xs uppercase tracking-wider text-gold-400 block font-semibold">步驟 2：切換預覽戲曲角色</label>
+            <select id="comparator-artwork-select" onchange="updateComparatorArtwork(this.value)" class="w-full px-4 py-3 rounded-xl bg-ink-900 gold-border text-stone-100 text-sm focus:outline-none focus:border-gold-400">
+              <option value="0">#01 青衣水袖・藍袍旦角（孔雀藍肌理）</option>
+              <option value="1">#02 鳳冠點翠・花旦特寫（繁複點翠頭飾）</option>
+              <option value="2">#03 緋紅戎裝・刀馬旦（狂放紅靠雙翎）</option>
+              <option value="3">#04 金縷流光・宮裝水袖（黑底流金高光）</option>
+              <option value="4">#05 丹鳳青龍・關公武財神（鎮宅招財首選）</option>
+              <option value="5">#06 粉墨登場・黑臉淨角（威嚴黑白臉譜）</option>
+              <option value="6">#07 素雅水袖・荀派旦角（象牙白柔美寫意）</option>
+              <option value="7">#08 翠袍紗帽・文官老生（深木框典藏示範）</option>
+            </select>
+          </div>
+
+          <!-- 3. 選擇外框材質 -->
+          <div class="space-y-2">
+            <label class="text-xs uppercase tracking-wider text-gold-400 block font-semibold">步驟 3：選擇裝裱畫框款式</label>
+            <div class="grid grid-cols-3 gap-2.5">
+              <button onclick="selectComparatorFrame('walnut')" id="frame-btn-walnut" class="px-3 py-2.5 rounded-lg bg-gold-400 text-ink-950 font-semibold text-xs transition">
+                深胡桃實木框
+              </button>
+              <button onclick="selectComparatorFrame('black')" id="frame-btn-black" class="px-3 py-2.5 rounded-lg bg-ink-800 text-stone-300 hover:text-white text-xs transition">
+                現代極簡黑框
+              </button>
+              <button onclick="selectComparatorFrame('canvas')" id="frame-btn-canvas" class="px-3 py-2.5 rounded-lg bg-ink-800 text-stone-300 hover:text-white text-xs transition">
+                無框厚繃畫布
+              </button>
+            </div>
+          </div>
+
+          <div class="pt-2">
+            <button onclick="applyComparatorToOrder()" class="w-full py-3.5 rounded-xl bg-vermilion-500 hover:bg-vermilion-600 text-white font-oriental font-bold tracking-wider transition shadow-lg shadow-vermilion-500/20 flex items-center justify-center gap-2">
+              <i class="fa-solid fa-check-double"></i> 以此規格帶入下方訂製單
+            </button>
+          </div>
+        </div>
+
+        <!-- 右側：互動式東方茶室／書房牆面比例模擬器 -->
+        <div class="lg:col-span-7">
+          <div class="rounded-2xl overflow-hidden gold-border bg-gradient-to-b from-[#231f1c] via-[#1c1916] to-[#12100e] p-6 sm:p-10 relative min-h-[480px] flex flex-col items-center justify-between shadow-2xl">
+            
+            <!-- 空間頂部標尺提示 -->
+            <div class="w-full flex items-center justify-between text-xs text-stone-400 border-b border-stone-800 pb-3">
+              <span><i class="fa-solid fa-ruler-combined text-gold-400 mr-1"></i> 實景空間比例模擬（參考中式案頭寬度 100 cm）</span>
+              <span id="comparator-dimension-badge" class="px-2.5 py-0.5 rounded bg-gold-400/20 text-gold-300 font-mono">
+                當前畫幅：20 × 30 cm
+              </span>
+            </div>
+
+            <!-- 畫作懸掛區 -->
+            <div class="my-auto py-8 flex items-center justify-center relative w-full">
+              <!-- 模擬投射燈光束 -->
+              <div class="absolute -top-6 w-64 h-64 bg-gold-400/10 rounded-full blur-2xl pointer-events-none"></div>
+
+              <!-- 動態縮放畫框容器 -->
+              <div id="comparator-frame-box" class="frame-walnut transition-all duration-500 relative bg-ink-950 overflow-hidden" style="width: 150px; height: 225px;">
+                <canvas id="comparator-art-canvas" width="300" height="450" class="w-full h-full object-cover"></canvas>
+                <!-- 尺標標註線 -->
+                <div class="absolute -right-7 top-0 bottom-0 flex items-center">
+                  <span id="comparator-height-label" class="text-[11px] font-mono text-gold-400 bg-ink-950/90 px-1 rounded">30cm</span>
+                </div>
+                <div class="absolute -bottom-6 left-0 right-0 flex justify-center">
+                  <span id="comparator-width-label" class="text-[11px] font-mono text-gold-400 bg-ink-950/90 px-1 rounded">20cm</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- 底部參照物：中式實木條案與青瓷茶具（固定比例參照） -->
+            <div class="w-full max-w-lg mx-auto pt-4">
+              <div class="flex items-end justify-between px-8 mb-1">
+                <!-- 參照物：中式茶壺與茶杯（高約 12cm） -->
+                <div class="flex items-end gap-2 text-stone-400" title="參照物：高 12cm 蓋碗茶具">
+                  <div class="w-8 h-7 rounded-t-lg bg-peacock-500/40 border border-peacock-400/50 flex items-center justify-center text-[10px] text-peacock-300">茶壺</div>
+                  <div class="w-4 h-4 rounded-t bg-peacock-500/30 border border-peacock-400/40"></div>
+                  <span class="text-[10px] text-stone-500">參照茶具 (12cm)</span>
+                </div>
+                <!-- 參照物：線香爐與花器 -->
+                <div class="flex flex-col items-center">
+                  <div class="w-1 h-10 bg-gradient-to-t from-amber-700 to-stone-400/40 animate-pulse"></div>
+                  <div class="w-10 h-3 rounded-full bg-gold-500/40 border border-gold-400/50"></div>
+                </div>
+              </div>
+              <!-- 實木案頭桌面 -->
+              <div class="h-4 w-full rounded-t-lg bg-gradient-to-r from-[#3a2314] via-[#52331f] to-[#3a2314] border-t border-gold-400/30 shadow-lg"></div>
+              <div class="h-3 w-11/12 mx-auto bg-[#26170d]"></div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- 線上訂製預約與規格試算表單 Custom Order Section -->
+  <section id="custom-order" class="py-16 sm:py-24 canvas-texture border-t border-gold-400/20">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="rounded-3xl bg-ink-900/95 gold-border p-6 sm:p-10 shadow-2xl">
+        <div class="text-center mb-8">
+          <span class="px-3 py-1 rounded-full bg-vermilion-500/20 text-vermilion-500 text-xs font-semibold tracking-widest uppercase">
+            Bespoke Commission
+          </span>
+          <h2 class="font-oriental text-3xl sm:text-4xl font-bold text-stone-100 mt-3">
+            手繪戲曲油畫・專屬訂製預約單
+          </h2>
+          <p class="text-stone-400 text-sm mt-2">
+            全系列作品皆由畫師親手以刮刀厚塗繪製，可指定本頁 8 款經典戲曲角色，或提供您喜愛的京劇／崑曲／傳統戲曲劇照量身訂製。
+          </p>
+        </div>
+
+        <form id="order-form" onsubmit="handleOrderSubmit(event)" class="space-y-6">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <!-- 選擇訂製款式 -->
+            <div>
+              <label class="block text-xs font-semibold uppercase tracking-wider text-gold-400 mb-2">
+                1. 選擇訂製戲曲款式 *
+              </label>
+              <select id="order-style" required class="w-full px-4 py-3 rounded-xl bg-ink-950 border border-stone-700 text-stone-100 text-sm focus:outline-none focus:border-gold-400">
+                <option value="款式 #01：青衣水袖・藍袍旦角">款式 #01：青衣水袖・藍袍旦角</option>
+                <option value="款式 #02：鳳冠點翠・花旦特寫">款式 #02：鳳冠點翠・花旦特寫</option>
+                <option value="款式 #03：緋紅戎裝・刀馬旦">款式 #03：緋紅戎裝・刀馬旦</option>
+                <option value="款式 #04：金縷流光・宮裝水袖">款式 #04：金縷流光・宮裝水袖</option>
+                <option value="款式 #05：丹鳳青龍・關公武財神">款式 #05：丹鳳青龍・關公武財神</option>
+                <option value="款式 #06：粉墨登場・黑臉淨角">款式 #06：粉墨登場・黑臉淨角</option>
+                <option value="款式 #07：素雅水袖・荀派旦角">款式 #07：素雅水袖・荀派旦角</option>
+                <option value="款式 #08：翠袍紗帽・文官老生">款式 #08：翠袍紗帽・文官老生</option>
+                <option value="自選劇照來圖訂製（生/旦/淨/末/丑）">自選劇照來圖訂製（生/旦/淨/末/丑）</option>
+              </select>
+            </div>
+
+            <!-- 選擇訂製尺寸 -->
+            <div>
+              <label class="block text-xs font-semibold uppercase tracking-wider text-gold-400 mb-2">
+                2. 選擇訂製尺寸規格 *
+              </label>
+              <select id="order-size" required class="w-full px-4 py-3 rounded-xl bg-ink-950 border border-stone-700 text-stone-100 text-sm focus:outline-none focus:border-gold-400">
+                <option value="20 × 30 cm（精緻小品訂製款）">20 × 30 cm（精緻小品訂製款）</option>
+                <option value="30 × 40 cm（經典畫幅訂製款）">30 × 40 cm（經典畫幅訂製款）</option>
+                <option value="雙幅組合（20×30cm + 30×40cm 各一）">雙幅組合（20×30cm + 30×40cm 各一）</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+            <!-- 裝裱方式 -->
+            <div>
+              <label class="block text-xs font-semibold uppercase tracking-wider text-gold-400 mb-2">
+                3. 外框裝裱選擇
+              </label>
+              <select id="order-frame" class="w-full px-4 py-3 rounded-xl bg-ink-950 border border-stone-700 text-stone-100 text-sm focus:outline-none focus:border-gold-400">
+                <option value="深胡桃實木外框（如影片#08示範）">深胡桃實木外框（如影片#08示範）</option>
+                <option value="現代極簡雅緻黑框">現代極簡雅緻黑框</option>
+                <option value="無框厚繃亞麻畫布">無框厚繃亞麻畫布</option>
+              </select>
+            </div>
+
+            <!-- 訂製數量 -->
+            <div>
+              <label class="block text-xs font-semibold uppercase tracking-wider text-gold-400 mb-2">
+                4. 訂製幅數
+              </label>
+              <input id="order-qty" type="number" min="1" max="20" value="1" class="w-full px-4 py-3 rounded-xl bg-ink-950 border border-stone-700 text-stone-100 text-sm focus:outline-none focus:border-gold-400" />
+            </div>
+
+            <!-- 聯絡人稱呼 -->
+            <div>
+              <label class="block text-xs font-semibold uppercase tracking-wider text-gold-400 mb-2">
+                5. 藏家稱呼 / 聯絡方式 *
+              </label>
+              <input id="order-contact" type="text" required placeholder="例如：陳先生 / Line ID 或電話" class="w-full px-4 py-3 rounded-xl bg-ink-950 border border-stone-700 text-stone-100 text-sm focus:outline-none focus:border-gold-400" />
+            </div>
+          </div>
+
+          <!-- 備註需求 -->
+          <div>
+            <label class="block text-xs font-semibold uppercase tracking-wider text-gold-400 mb-2">
+              6. 肌理細節或題字備註（選填）
+            </label>
+            <textarea id="order-notes" rows="2" placeholder="可指定背景底色（亞麻原色／深邃黑底）、油彩厚塗程度或送禮賀卡需求..." class="w-full px-4 py-3 rounded-xl bg-ink-950 border border-stone-700 text-stone-100 text-sm focus:outline-none focus:border-gold-400"></textarea>
+          </div>
+
+          <button type="submit" class="w-full py-4 rounded-xl bg-gradient-to-r from-vermilion-500 to-vermilion-600 hover:from-vermilion-600 hover:to-vermilion-700 text-white font-oriental text-lg font-bold tracking-widest shadow-xl shadow-vermilion-500/25 transition flex items-center justify-center gap-2">
+            <i class="fa-solid fa-scroll"></i> 生成專屬訂製單並複製訂製訊息
+          </button>
+        </form>
+
+        <!-- 訂製單生成結果顯示框 -->
+        <div id="order-result-box" class="hidden mt-6 p-5 rounded-2xl bg-ink-950 border border-gold-400/50 space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="text-gold-400 font-oriental font-bold text-sm flex items-center gap-2">
+              <i class="fa-solid fa-circle-check text-emerald-400"></i> 專屬訂製單已生成並複製到剪貼簿！
+            </span>
+            <button onclick="copyOrderText()" class="text-xs px-3 py-1 rounded bg-gold-400/20 hover:bg-gold-400/30 text-gold-300 transition">
+              <i class="fa-regular fa-copy"></i> 再次複製
+            </button>
+          </div>
+          <pre id="order-summary-text" class="text-xs text-stone-300 font-mono whitespace-pre-wrap bg-ink-900 p-3.5 rounded-xl border border-stone-800"></pre>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 頁尾 Footer -->
+  <footer class="bg-ink-950 border-t border-stone-800 py-12 text-stone-400 text-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-6">
+      <div class="flex items-center gap-3">
+        <div class="w-8 h-8 rounded impasto-badge flex items-center justify-center text-white font-oriental font-bold">
+          戲
+        </div>
+        <div>
+          <p class="font-oriental text-stone-200 font-semibold">手繪藝術 — 中國戲曲刮刀厚塗油畫訂製</p>
+          <p class="text-xs text-stone-500">訂製規格：20 × 30 cm ｜ 30 × 40 cm 純手繪亞麻畫布</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-4 text-xs">
+        <button onclick="toggleDeployModal()" class="px-3.5 py-2 rounded-lg bg-ink-900 hover:bg-ink-800 gold-border text-gold-300 transition flex items-center gap-1.5">
+          <i class="fa-brands fa-github"></i> GitHub Pages 上傳與影片播放檢測工具
+        </button>
+      </div>
+    </div>
+  </footer>
+
+  <!-- 燈箱放大檢視模式 Video Lightbox Modal -->
+  <div id="video-lightbox" class="fixed inset-0 z-50 hidden bg-black/90 backdrop-blur-md flex items-center justify-center p-4">
+    <div class="relative w-full max-w-3xl bg-ink-900 rounded-2xl gold-border overflow-hidden shadow-2xl grid grid-cols-1 md:grid-cols-12">
+      <!-- 關閉按鈕 -->
+      <button onclick="closeLightbox()" class="absolute top-3 right-3 z-20 w-9 h-9 rounded-full bg-black/70 hover:bg-vermilion-500 text-white flex items-center justify-center transition">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <!-- 左側影片播放 -->
+      <div class="md:col-span-6 bg-black flex items-center justify-center aspect-[9/16] max-h-[80vh] mx-auto w-full">
+        <video id="lightbox-video" class="w-full h-full object-contain" controls playsinline autoplay loop></video>
+      </div>
+
+      <!-- 右側藝術賞析與快速下單 -->
+      <div class="md:col-span-6 p-6 flex flex-col justify-between space-y-4">
+        <div class="space-y-3">
+          <span id="lightbox-category" class="px-2.5 py-1 rounded bg-vermilion-500/20 text-vermilion-500 text-xs font-semibold"></span>
+          <h3 id="lightbox-title" class="font-oriental text-2xl font-bold text-white"></h3>
+          <p id="lightbox-desc" class="text-stone-300 text-sm leading-relaxed"></p>
+          <div class="pt-3 border-t border-stone-800 space-y-2 text-xs text-stone-400">
+            <p><strong class="text-gold-300">創作媒材：</strong>手繪亞麻油畫布、專業級油彩、油畫刮刀厚塗</p>
+            <p><strong class="text-gold-300">可訂製尺寸：</strong>20 × 30 cm ／ 30 × 40 cm</p>
+            <p><strong class="text-gold-300">影片檔案路徑：</strong><code id="lightbox-filename" class="text-white bg-ink-950 px-1.5 py-0.5 rounded"></code></p>
+          </div>
+        </div>
+
+        <div class="space-y-2.5 pt-4">
+          <button onclick="orderFromLightbox('20 × 30 cm（精緻小品訂製款）')" class="w-full py-2.5 rounded-xl bg-ink-800 hover:bg-gold-400 hover:text-ink-950 gold-border text-gold-300 font-oriental text-sm font-semibold transition">
+            訂製此款 20 × 30 cm
+          </button>
+          <button onclick="orderFromLightbox('30 × 40 cm（經典畫幅訂製款）')" class="w-full py-2.5 rounded-xl bg-vermilion-500 hover:bg-vermilion-600 text-white font-oriental text-sm font-semibold transition">
+            訂製此款 30 × 40 cm（熱門推薦）
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- GitHub 部署與影片路徑檢測小幫手 Modal -->
+  <div id="deploy-modal" class="fixed inset-0 z-50 hidden bg-black/85 backdrop-blur-md flex items-center justify-center p-4">
+    <div class="w-full max-w-2xl bg-ink-900 rounded-2xl gold-border p-6 sm:p-8 shadow-2xl max-h-[90vh] overflow-y-auto space-y-5">
+      <div class="flex items-center justify-between border-b border-stone-800 pb-4">
+        <div class="flex items-center gap-2.5">
+          <i class="fa-brands fa-github text-2xl text-gold-400"></i>
+          <div>
+            <h3 class="font-oriental text-xl font-bold text-white">GitHub Pages 部署與影片播放檢測助手</h3>
+            <p class="text-xs text-stone-400">徹底解決 GitHub 影片無法播放（404 / 編碼 / 路徑問題）</p>
+          </div>
+        </div>
+        <button onclick="toggleDeployModal()" class="w-8 h-8 rounded-lg bg-ink-800 hover:bg-ink-700 text-stone-400 hover:text-white flex items-center justify-center">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <!-- 步驟 1：檔案結構說明 -->
+      <div class="space-y-2">
+        <h4 class="text-sm font-semibold text-gold-300 flex items-center gap-2">
+          <span class="w-5 h-5 rounded-full bg-gold-400 text-ink-950 text-xs font-bold flex items-center justify-center">1</span>
+          上傳至 GitHub 儲存庫的檔案命名規範
+        </h4>
+        <p class="text-xs text-stone-300 leading-relaxed">
+          本網頁已內建雙路徑自動偵測。您只需將下載的這個網頁存為 <code class="text-gold-300 bg-black px-1.5 py-0.5 rounded">index.html</code>，並將您的 8 支實拍影片命名為 <code class="text-gold-300 bg-black px-1.5 py-0.5 rounded">video_1.mp4</code> 至 <code class="text-gold-300 bg-black px-1.5 py-0.5 rounded">video_8.mp4</code>，放在同一層目錄（或 <code class="text-gold-300 bg-black px-1.5 py-0.5 rounded">assets/</code> 資料夾內）即可自動播放！
+        </p>
+        <div class="bg-ink-950 p-3.5 rounded-xl border border-stone-800 font-mono text-xs text-stone-300">
+          ├── index.html &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-stone-500"># 本網站主程式</span><br>
+          ├── video_1.mp4 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-stone-500"># 01 青衣水袖・藍袍旦角 (0:25)</span><br>
+          ├── video_2.mp4 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-stone-500"># 02 鳳冠點翠・花旦特寫 (0:18)</span><br>
+          ├── video_3.mp4 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-stone-500"># 03 緋紅戎裝・刀馬旦 (0:25)</span><br>
+          ├── video_4.mp4 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-stone-500"># 04 金縷流光・宮裝水袖 (0:25)</span><br>
+          ├── video_5.mp4 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-stone-500"># 05 丹鳳青龍・關公武財神 (0:25)</span><br>
+          ├── video_6.mp4 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-stone-500"># 06 粉墨登場・黑臉淨角 (0:34)</span><br>
+          ├── video_7.mp4 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-stone-500"># 07 素雅水袖・荀派旦角 (0:35)</span><br>
+          └── video_8.mp4 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-stone-500"># 08 翠袍紗帽・文官老生 (0:23)</span>
+        </div>
+      </div>
+
+      <!-- 步驟 2：即時連線狀態表 -->
+      <div class="space-y-2">
+        <div class="flex items-center justify-between">
+          <h4 class="text-sm font-semibold text-gold-300 flex items-center gap-2">
+            <span class="w-5 h-5 rounded-full bg-gold-400 text-ink-950 text-xs font-bold flex items-center justify-center">2</span>
+            8 支影片即時載入狀態檢測
+          </h4>
+          <label for="local-video-picker" class="text-xs text-vermilion-500 hover:underline cursor-pointer">
+            + 點此從電腦選取影片測試
+          </label>
+        </div>
+        <div id="video-status-list" class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
+          <!-- 由 JS 動態更新每支影片是否已載入 -->
+        </div>
+      </div>
+
+      <!-- 步驟 3：一鍵複製 Git 部署指令 -->
+      <div class="space-y-2">
+        <div class="flex items-center justify-between">
+          <h4 class="text-sm font-semibold text-gold-300 flex items-center gap-2">
+            <span class="w-5 h-5 rounded-full bg-gold-400 text-ink-950 text-xs font-bold flex items-center justify-center">3</span>
+            Git 終端機上傳指令（避免 Git LFS 阻擋播放）
+          </h4>
+          <button onclick="copyGitCommands()" class="text-xs px-2.5 py-1 rounded bg-gold-400/20 text-gold-300 hover:bg-gold-400/30 transition">
+            <i class="fa-regular fa-copy"></i> 複製指令
+          </button>
+        </div>
+        <pre id="git-cmd-block" class="bg-ink-950 p-3.5 rounded-xl border border-stone-800 font-mono text-xs text-emerald-400 overflow-x-auto">git init
+git add index.html *.mp4
+git commit -m "部署中國戲曲手繪刀畫訂製網站與8支實拍影片"
+git branch -M main
+git remote add origin https://github.com/hec646/chinese-opera-oil-painting.git
+git push -u origin main</pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- 頂部浮動 Toast 訊息提示 -->
+  <div id="toast-notification" class="fixed bottom-5 right-5 z-50 hidden px-4 py-3 rounded-xl bg-ink-900 border border-gold-400 text-stone-100 text-xs shadow-2xl flex items-center gap-2.5">
+    <i class="fa-solid fa-circle-check text-gold-400 text-base"></i>
+    <span id="toast-text">操作成功</span>
+  </div>
+
+  <!-- 核心互動邏輯 JavaScript -->
+  <script>
+    // 8 支實拍創作影片完整藝術資料庫
+    const artworksData = [
+      {
+        id: 1,
+        file: 'video_1.mp4',
+        duration: '00:25',
+        category: 'dan',
+        categoryLabel: '旦角・青衣水袖',
+        title: '青衣水袖・藍袍旦角',
+        subtitle: '孔雀藍大面積刮刀厚塗',
+        desc: '於中粗紋亞麻畫布上，先凝練勾勒旦角清冷婉約的眉眼；隨後以油畫刮刀大面積鋪陳孔雀藍戲服，刀鋒轉折間自然帶出深淺交織的立體衣褶與水袖動感。',
+        palette: ['#0f6a8b', '#279dc4', '#162533', '#d94854'],
+        bgColor: '#787166'
+      },
+      {
+        id: 2,
+        file: 'video_2.mp4',
+        duration: '00:18',
+        category: 'dan',
+        categoryLabel: '旦角・花旦特寫',
+        title: '鳳冠點翠・花旦特寫',
+        subtitle: '小號刮刀精緻堆疊點翠絨球',
+        desc: '聚焦於傳統花旦的柳葉眉、丹鳳眼與朱唇紅妝，使用尖頭小號刮刀挑取純白、硃砂紅與翠藍油彩，層層厚塗出繁複華麗的點翠鳳冠與立體絨球肌理。',
+        palette: ['#d13838', '#499ab8', '#f2ece1', '#597a63'],
+        bgColor: '#7a7267'
+      },
+      {
+        id: 3,
+        file: 'video_3.mp4',
+        duration: '00:25',
+        category: 'daoma',
+        categoryLabel: '刀馬旦・緋紅戎裝',
+        title: '緋紅戎裝・刀馬旦',
+        subtitle: '狂放刀法展現巾幗英姿',
+        desc: '雙翎高聳、紅靠翻飛！以極具爆發力的刮刀厚塗技法，將緋紅、墨黑與翠綠油彩俐落揮灑，表現刀馬旦披掛上陣、英姿颯爽的視覺張力。',
+        palette: ['#b8231d', '#e03e2d', '#1c6e73', '#171515'],
+        bgColor: '#756e63'
+      },
+      {
+        id: 4,
+        file: 'video_4.mp4',
+        duration: '00:25',
+        category: 'dan',
+        categoryLabel: '旦角・流金水袖',
+        title: '金縷流光・宮裝水袖',
+        subtitle: '深邃黑底襯托流金溢彩',
+        desc: '採用深邃黑底畫布，襯托金黃與赭石交織的宮裝華服。刮刀一抹即帶出金屬般的高光與暗部對比，仰首揚起純白水袖，盡顯雍容華貴氣韻。',
+        palette: ['#d49b35', '#8c5a1b', '#f0ede6', '#d9596c'],
+        bgColor: '#121212'
+      },
+      {
+        id: 5,
+        file: 'video_5.mp4',
+        duration: '00:25',
+        category: 'jing',
+        categoryLabel: '武聖・關公鎮宅',
+        title: '丹鳳青龍・關公武財神',
+        subtitle: '青綠鎧甲配赤紅重彩',
+        desc: '重彩刻畫關聖帝君丹鳳眼、臥蠶眉與赤紅面龐，手執青龍偃月刀。以厚重刮刀堆疊出松石綠戰袍與赤紅靠旗，刀刀見力，威風凜凜，為鎮宅招財首選。',
+        palette: ['#137a8c', '#c92a2a', '#1a1a1a', '#b88b4a'],
+        bgColor: '#807b73'
+      },
+      {
+        id: 6,
+        file: 'video_6.mp4',
+        duration: '00:34',
+        category: 'jing',
+        categoryLabel: '淨角・威嚴臉譜',
+        title: '粉墨登場・黑臉淨角',
+        subtitle: '完整記錄開臉至披袍全過程',
+        desc: '從空白畫布第一筆開始完整實拍：先以細筆勾畫黑白分明的淨角威嚴臉譜與滿頭紅花盔頭，再換油畫刀大刀闊斧刮出黑色蟒袍與金彩護甲。',
+        palette: ['#1c1b1a', '#c92e2e', '#e8e4dc', '#c99e32'],
+        bgColor: '#736d64'
+      },
+      {
+        id: 7,
+        file: 'video_7.mp4',
+        duration: '00:35',
+        category: 'dan',
+        categoryLabel: '旦角・荀派寫意',
+        title: '素雅水袖・荀派旦角',
+        subtitle: '象牙白與淡青的柔美交響',
+        desc: '從眼波流轉的細膩開臉落筆，到以刮刀垂直拉出象牙白、淡檸檬黃與湖水綠交織的輕柔水袖，完美詮釋東方戲曲「回眸一笑百媚生」的寫意美學。',
+        palette: ['#e6e2d8', '#3c8c82', '#d96b70', '#d6c26b'],
+        bgColor: '#787268'
+      },
+      {
+        id: 8,
+        file: 'video_8.mp4',
+        duration: '00:23',
+        category: 'sheng',
+        categoryLabel: '老生／文官神韻',
+        title: '翠袍紗帽・文官老生',
+        subtitle: '含實木裝框完品展示',
+        desc: '生動捕捉傳統戲曲文官老生微蹙眉頭的傳神表情，以刮刀俐落抹出翠綠官袍與雙袖白綢；影片最後更完整展示裝裱入深胡桃木畫框後的典藏效果。',
+        palette: ['#108575', '#1eb092', '#e8dfd5', '#8c583a'],
+        bgColor: '#756f63'
+      }
+    ];
+
+    // 儲存使用者從本機選取的 Blob URL 對應表
+    const localVideoBlobMap = {};
+    let currentHeroIndex = 0;
+    let currentComparatorSize = '20x30';
+    let currentComparatorFrame = 'walnut';
+    let currentComparatorArtIndex = 0;
+
+    // 繪製東方刮刀厚塗油畫意境 Canvas（作為實拍影片載入前的視覺預覽與空間模擬器畫心）
+    function drawImpastoArtwork(canvas, art, includeFrameShadow = false) {
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      const w = canvas.width;
+      const h = canvas.height;
+
+      // 1. 亞麻畫布底色與經緯紋理
+      ctx.fillStyle = art.bgColor || '#756f63';
+      ctx.fillRect(0, 0, w, h);
+
+      ctx.strokeStyle = 'rgba(0,0,0,0.08)';
+      ctx.lineWidth = 1;
+      for (let x = 0; x < w; x += 4) {
+        ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, h); ctx.stroke();
+      }
+      for (let y = 0; y < h; y += 4) {
+        ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(w, y); ctx.stroke();
+      }
+
+      // 2. 繪製刮刀厚塗戲服筆觸
+      const cx = w * 0.5;
+      const headY = h * 0.26;
+
+      // 戲服主體刮刀塊面
+      for (let i = 0; i < 28; i++) {
+        const color = art.palette[i % art.palette.length];
+        ctx.save();
+        const px = cx + (Math.sin(i * 1.7) * w * 0.22);
+        const py = headY + 35 + (i * (h * 0.62) / 28);
+        const angle = (Math.cos(i * 1.3) * 0.45);
+        ctx.translate(px, py);
+        ctx.rotate(angle);
+
+        // 厚塗陰影立體感
+        ctx.fillStyle = 'rgba(0,0,0,0.35)';
+        ctx.fillRect(-28, 3, 56, 22);
+
+        ctx.fillStyle = color;
+        ctx.fillRect(-30, 0, 60, 20);
+
+        // 刮刀高光邊緣
+        ctx.fillStyle = 'rgba(255,255,255,0.22)';
+        ctx.fillRect(-30, 0, 60, 3);
+        ctx.restore();
+      }
+
+      // 3. 繪製點翠頭飾／鳳冠盔頭
+      for (let j = 0; j < 18; j++) {
+        const angle = (Math.PI * 1.15) + (j / 17) * (Math.PI * 0.7);
+        const radius = 26 + (j % 3) * 10;
+        const tx = cx + Math.cos(angle) * radius;
+        const ty = headY + Math.sin(angle) * radius;
+        ctx.beginPath();
+        ctx.arc(tx, ty, 7 + (j % 2) * 4, 0, Math.PI * 2);
+        ctx.fillStyle = art.palette[(j + 1) % art.palette.length];
+        ctx.fill();
+      }
+
+      // 4. 戲曲人物開臉（粉墨登場）
+      ctx.beginPath();
+      ctx.ellipse(cx, headY + 6, 20, 25, 0, 0, Math.PI * 2);
+      ctx.fillStyle = art.id === 5 ? '#c9342a' : (art.id === 6 ? '#f0ede6' : '#f5e6dc');
+      ctx.fill();
+
+      // 胭脂眼影與丹鳳眼
+      ctx.fillStyle = 'rgba(209, 56, 56, 0.55)';
+      ctx.beginPath();
+      ctx.arc(cx - 8, headY + 4, 6, 0, Math.PI * 2);
+      ctx.arc(cx + 8, headY + 4, 6, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.strokeStyle = '#141210';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(cx - 14, headY + 2); ctx.lineTo(cx - 3, headY + 5);
+      ctx.moveTo(cx + 3, headY + 5); ctx.lineTo(cx + 14, headY + 2);
+      ctx.stroke();
+
+      // 朱唇
+      ctx.fillStyle = '#c82828';
+      ctx.beginPath();
+      ctx.arc(cx, headY + 18, 3.5, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    // 初始化主視覺 8 支影片切換按鈕
+    function initHeroSwitcher() {
+      const container = document.getElementById('hero-switcher-btns');
+      container.innerHTML = artworksData.map((art, idx) => `
+        <button onclick="switchHeroVideo(${idx})" id="hero-btn-${idx}"
+          class="py-1.5 rounded text-xs font-mono transition border ${idx === 0 ? 'bg-gold-400 text-ink-950 font-bold border-gold-400' : 'bg-ink-800 text-stone-300 border-stone-700 hover:border-gold-400/50'}">
+          0${art.id}
+        </button>
+      `).join('');
+
+      const heroCanvas = document.getElementById('hero-fallback-canvas');
+      heroCanvas.width = 360;
+      heroCanvas.height = 640;
+      drawImpastoArtwork(heroCanvas, artworksData[0]);
+
+      const heroVideo = document.getElementById('hero-video');
+      heroVideo.addEventListener('loadeddata', () => {
+        document.getElementById('hero-fallback-overlay').classList.add('opacity-0');
+        updateVideoStatusBadge(artworksData[currentHeroIndex].file, true);
+      });
+    }
+
+    // 切換主視覺播放影片
+    function switchHeroVideo(index) {
+      currentHeroIndex = index;
+      const art = artworksData[index];
+      const heroVideo = document.getElementById('hero-video');
+      const heroCanvas = document.getElementById('hero-fallback-canvas');
+
+      drawImpastoArtwork(heroCanvas, art);
+      document.getElementById('hero-video-badge').innerHTML = `<i class="fa-solid fa-film text-vermilion-500"></i> 實拍創作 #0${art.id}：${art.title}`;
+      document.getElementById('hero-index-indicator').textContent = `${art.id} / 8`;
+      document.getElementById('hero-expected-file').textContent = art.file;
+
+      // 更新按鈕高亮
+      artworksData.forEach((_, idx) => {
+        const btn = document.getElementById(`hero-btn-${idx}`);
+        if (idx === index) {
+          btn.className = 'py-1.5 rounded text-xs font-mono transition border bg-gold-400 text-ink-950 font-bold border-gold-400';
+        } else {
+          btn.className = 'py-1.5 rounded text-xs font-mono transition border bg-ink-800 text-stone-300 border-stone-700 hover:border-gold-400/50';
+        }
+      });
+
+      // 若已有本機載入的 Blob URL 則優先使用
+      if (localVideoBlobMap[art.file]) {
+        heroVideo.src = localVideoBlobMap[art.file];
+        document.getElementById('hero-fallback-overlay').classList.add('opacity-0');
+      } else {
+        document.getElementById('hero-fallback-overlay').classList.remove('opacity-0');
+        heroVideo.innerHTML = `
+          <source src="${art.file}" type="video/mp4">
+          <source src="assets/${art.file}" type="video/mp4">
+          <source src="./${art.file}" type="video/mp4">
+          <source src="./assets/${art.file}" type="video/mp4">
+        `;
+        heroVideo.load();
+      }
+      heroVideo.play().catch(() => {});
+    }
+
+    // 切換主視覺靜音狀態
+    function toggleHeroMute() {
+      const heroVideo = document.getElementById('hero-video');
+      const btn = document.getElementById('hero-mute-btn');
+      heroVideo.muted = !heroVideo.muted;
+      if (heroVideo.muted) {
+        btn.innerHTML = '<i class="fa-solid fa-volume-xmark"></i> <span>開啟原聲</span>';
+      } else {
+        btn.innerHTML = '<i class="fa-solid fa-volume-high text-gold-400"></i> <span class="text-gold-300">原聲播放中</span>';
+      }
+    }
+
+    // 渲染 8 支實拍創作影片畫廊卡片
+    function renderGallery(filter = 'all') {
+      const grid = document.getElementById('video-gallery-grid');
+      const filtered = filter === 'all' ? artworksData : artworksData.filter(item => item.category === filter);
+
+      grid.innerHTML = filtered.map(art => {
+        const blobUrl = localVideoBlobMap[art.file];
+        return `
+          <article class="rounded-2xl bg-ink-900 gold-border gold-border-hover overflow-hidden flex flex-col justify-between transition group">
+            <div>
+              <!-- 9:16 直式實拍影片區 -->
+              <div class="relative aspect-[9/16] w-full bg-ink-950 overflow-hidden">
+                <!-- 刀畫動態基底 Canvas -->
+                <canvas id="card-canvas-${art.id}" width="270" height="480" class="absolute inset-0 w-full h-full object-cover"></canvas>
+
+                <!-- 實拍影片標籤（支援雙路徑備援） -->
+                <video id="card-video-${art.id}" data-file="${art.file}"
+                  class="gallery-video relative z-10 w-full h-full object-cover"
+                  controls playsinline loop muted preload="metadata"
+                  onloadeddata="handleCardVideoLoaded(${art.id}, '${art.file}')">
+                  ${blobUrl ? `<source src="${blobUrl}" type="video/mp4">` : `
+                    <source src="${art.file}" type="video/mp4">
+                    <source src="assets/${art.file}" type="video/mp4">
+                    <source src="./${art.file}" type="video/mp4">
+                    <source src="./assets/${art.file}" type="video/mp4">
+                  `}
+                </video>
+
+                <!-- 頂部編號與時長標籤 -->
+                <div class="absolute top-3 left-3 right-3 z-20 flex items-center justify-between pointer-events-none">
+                  <span class="px-2.5 py-1 rounded-md bg-black/75 backdrop-blur-sm text-gold-300 font-mono text-xs border border-gold-400/30">
+                    #0${art.id}・${art.duration}
+                  </span>
+                  <button onclick="openLightbox(${art.id})" class="pointer-events-auto w-8 h-8 rounded-full bg-black/75 hover:bg-vermilion-500 text-white flex items-center justify-center transition" title="放大全螢幕賞析">
+                    <i class="fa-solid fa-expand text-xs"></i>
+                  </button>
+                </div>
+
+                <!-- 尚未部署實拍檔時的提示標籤 -->
+                <div id="card-badge-${art.id}" class="${blobUrl ? 'hidden' : ''} absolute bottom-12 left-3 right-3 z-20 pointer-events-none">
+                  <div class="bg-black/75 backdrop-blur-sm px-2.5 py-1.5 rounded-lg border border-stone-700 text-[11px] text-stone-300 flex items-center justify-between">
+                    <span><i class="fa-solid fa-video text-gold-400 mr-1"></i>路徑：<code>${art.file}</code></span>
+                    <span class="text-gold-300">雙路徑就緒</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 藝術標題與刀法解析 -->
+              <div class="p-4 space-y-2">
+                <div class="flex items-center justify-between text-xs">
+                  <span class="text-vermilion-500 font-semibold">${art.categoryLabel}</span>
+                  <span class="text-stone-400">20×30 / 30×40cm</span>
+                </div>
+                <h3 class="font-oriental text-xl font-bold text-stone-100 group-hover:text-gold-300 transition">
+                  ${art.title}
+                </h3>
+                <p class="text-xs text-stone-400 leading-relaxed line-clamp-3">
+                  ${art.desc}
+                </p>
+              </div>
+            </div>
+
+            <!-- 底部快速訂製與放大按鈕 -->
+            <div class="p-4 pt-0 flex items-center gap-2">
+              <button onclick="quickSelectOrder(${art.id})" class="flex-1 py-2.5 rounded-xl bg-vermilion-500/15 hover:bg-vermilion-500 border border-vermilion-500/40 text-gold-300 hover:text-white font-oriental text-xs font-semibold transition">
+                訂製此款刀畫
+              </button>
+              <button onclick="openLightbox(${art.id})" class="px-3 py-2.5 rounded-xl bg-ink-800 hover:bg-ink-700 text-stone-300 text-xs transition" title="燈箱放大">
+                <i class="fa-solid fa-magnifying-glass-plus"></i>
+              </button>
+            </div>
+          </article>
+        `;
+      }).join('');
+
+      // 繪製每張卡片的東方刀畫基底
+      filtered.forEach(art => {
+        const c = document.getElementById(`card-canvas-${art.id}`);
+        drawImpastoArtwork(c, art);
+      });
+    }
+
+    // 當卡片讀取到實體 MP4 檔案時隱藏預覽提示
+    function handleCardVideoLoaded(id, filename) {
+      const badge = document.getElementById(`card-badge-${id}`);
+      if (badge) badge.classList.add('hidden');
+      updateVideoStatusBadge(filename, true);
+    }
+
+    // 分類篩選切換
+    function filterGallery(category) {
+      document.querySelectorAll('.filter-btn').forEach(btn => {
+        if (btn.dataset.filter === category) {
+          btn.className = 'filter-btn active px-4 py-2 rounded-full text-xs sm:text-sm font-oriental transition bg-gold-400 text-ink-950 font-bold';
+        } else {
+          btn.className = 'filter-btn px-4 py-2 rounded-full text-xs sm:text-sm font-oriental transition bg-ink-800 text-stone-300 hover:text-gold-300';
+        }
+      });
+      renderGallery(category);
+    }
+
+    // 全部播放與全部暫停
+    function playAllVideos() {
+      document.querySelectorAll('.gallery-video').forEach(v => v.play().catch(() => {}));
+      showToast('已啟動全部實拍影片播放');
+    }
+    function pauseAllVideos() {
+      document.querySelectorAll('.gallery-video').forEach(v => v.pause());
+      showToast('已暫停所有畫廊影片');
+    }
+
+    // 支援使用者直接從本機選取 video_1.mp4 ~ video_8.mp4 立即預覽
+    document.getElementById('local-video-picker').addEventListener('change', function(e) {
+      const files = Array.from(e.target.files);
+      if (!files.length) return;
+
+      let matchedCount = 0;
+      files.forEach((file, idx) => {
+        const blobUrl = URL.createObjectURL(file);
+        // 優先依據檔名匹配 video_1.mp4 ~ video_8.mp4，若檔名不同則依序號對應
+        const match = file.name.match(/(\d+)/);
+        let targetKey = `video_${idx + 1}.mp4`;
+        if (match && parseInt(match[1]) >= 1 && parseInt(match[1]) <= 8) {
+          targetKey = `video_${parseInt(match[1])}.mp4`;
+        }
+        localVideoBlobMap[targetKey] = blobUrl;
+        updateVideoStatusBadge(targetKey, true);
+        matchedCount++;
+      });
+
+      // 重新渲染畫廊與主視覺
+      renderGallery('all');
+      switchHeroVideo(currentHeroIndex);
+      showToast(`成功載入 ${matchedCount} 支本機實拍影片！現在可直接流暢播放。`);
+    });
+
+    // 尺寸與空間比例比對器邏輯
+    function selectComparatorSize(size) {
+      currentComparatorSize = size;
+      const frameBox = document.getElementById('comparator-frame-box');
+      const btn20 = document.getElementById('btn-size-20x30');
+      const btn30 = document.getElementById('btn-size-30x40');
+      const badge = document.getElementById('comparator-dimension-badge');
+      const wLabel = document.getElementById('comparator-width-label');
+      const hLabel = document.getElementById('comparator-height-label');
+
+      if (size === '20x30') {
+        frameBox.style.width = '150px';
+        frameBox.style.height = '225px';
+        badge.textContent = '當前畫幅：20 × 30 cm（精緻小品）';
+        wLabel.textContent = '20cm';
+        hLabel.textContent = '30cm';
+        btn20.className = 'p-4 rounded-xl border-2 border-gold-400 bg-gold-400/10 text-left transition';
+        btn30.className = 'p-4 rounded-xl border border-stone-700 bg-ink-900 hover:border-gold-400/50 text-left transition';
+      } else {
+        frameBox.style.width = '225px';
+        frameBox.style.height = '300px';
+        badge.textContent = '當前畫幅：30 × 40 cm（經典畫幅）';
+        wLabel.textContent = '30cm';
+        hLabel.textContent = '40cm';
+        btn30.className = 'p-4 rounded-xl border-2 border-gold-400 bg-gold-400/10 text-left transition';
+        btn20.className = 'p-4 rounded-xl border border-stone-700 bg-ink-900 hover:border-gold-400/50 text-left transition';
+      }
+    }
+
+    function updateComparatorArtwork(indexStr) {
+      currentComparatorArtIndex = parseInt(indexStr, 10);
+      const canvas = document.getElementById('comparator-art-canvas');
+      drawImpastoArtwork(canvas, artworksData[currentComparatorArtIndex]);
+    }
+
+    function selectComparatorFrame(frameType) {
+      currentComparatorFrame = frameType;
+      const frameBox = document.getElementById('comparator-frame-box');
+      frameBox.className = `frame-${frameType} transition-all duration-500 relative bg-ink-950 overflow-hidden`;
+
+      ['walnut', 'black', 'canvas'].forEach(t => {
+        const btn = document.getElementById(`frame-btn-${t}`);
+        if (t === frameType) {
+          btn.className = 'px-3 py-2.5 rounded-lg bg-gold-400 text-ink-950 font-semibold text-xs transition';
+        } else {
+          btn.className = 'px-3 py-2.5 rounded-lg bg-ink-800 text-stone-300 hover:text-white text-xs transition';
+        }
+      });
+    }
+
+    function applyComparatorToOrder() {
+      const art = artworksData[currentComparatorArtIndex];
+      document.getElementById('order-style').value = `款式 #0${art.id}：${art.title}`;
+      document.getElementById('order-size').value = currentComparatorSize === '20x30'
+        ? '20 × 30 cm（精緻小品訂製款）'
+        : '30 × 40 cm（經典畫幅訂製款）';
+
+      const frameMap = {
+        walnut: '深胡桃實木外框（如影片#08示範）',
+        black: '現代極簡雅緻黑框',
+        canvas: '無框厚繃亞麻畫布'
+      };
+      document.getElementById('order-frame').value = frameMap[currentComparatorFrame];
+
+      document.getElementById('custom-order').scrollIntoView({ behavior: 'smooth' });
+      showToast('已將您選擇的尺寸與畫框規格帶入訂製單！');
+    }
+
+    // 燈箱放大檢視
+    let currentLightboxArt = null;
+    function openLightbox(id) {
+      const art = artworksData.find(a => a.id === id);
+      if (!art) return;
+      currentLightboxArt = art;
+
+      document.getElementById('lightbox-category').textContent = art.categoryLabel;
+      document.getElementById('lightbox-title').textContent = `#0${art.id} ${art.title}`;
+      document.getElementById('lightbox-desc').textContent = art.desc;
+      document.getElementById('lightbox-filename').textContent = `${art.file} / assets/${art.file}`;
+
+      const video = document.getElementById('lightbox-video');
+      if (localVideoBlobMap[art.file]) {
+        video.src = localVideoBlobMap[art.file];
+      } else {
+        video.innerHTML = `
+          <source src="${art.file}" type="video/mp4">
+          <source src="assets/${art.file}" type="video/mp4">
+        `;
+        video.load();
+      }
+      document.getElementById('video-lightbox').classList.remove('hidden');
+      video.play().catch(() => {});
+    }
+
+    function closeLightbox() {
+      const video = document.getElementById('lightbox-video');
+      video.pause();
+      document.getElementById('video-lightbox').classList.add('hidden');
+    }
+
+    function orderFromLightbox(sizeText) {
+      if (currentLightboxArt) {
+        document.getElementById('order-style').value = `款式 #0${currentLightboxArt.id}：${currentLightboxArt.title}`;
+      }
+      document.getElementById('order-size').value = sizeText;
+      closeLightbox();
+      document.getElementById('custom-order').scrollIntoView({ behavior: 'smooth' });
+      showToast(`已選擇「${currentLightboxArt.title} - ${sizeText}」`);
+    }
+
+    function quickSelectOrder(id) {
+      const art = artworksData.find(a => a.id === id);
+      if (!art) return;
+      document.getElementById('order-style').value = `款式 #0${art.id}：${art.title}`;
+      document.getElementById('custom-order').scrollIntoView({ behavior: 'smooth' });
+      showToast(`已帶入「款式 #0${art.id}：${art.title}」至下方訂製表單`);
+    }
+
+    // 處理訂製單提交與複製
+    function handleOrderSubmit(e) {
+      e.preventDefault();
+      const style = document.getElementById('order-style').value;
+      const size = document.getElementById('order-size').value;
+      const frame = document.getElementById('order-frame').value;
+      const qty = document.getElementById('order-qty').value;
+      const contact = document.getElementById('order-contact').value;
+      const notes = document.getElementById('order-notes').value || '無特別備註（依畫師標準刀畫肌理繪製）';
+
+      const summary = `【手繪藝術 — 中國戲曲刮刀油畫訂製單】
+----------------------------------------
+・訂製款式：${style}
+・訂製尺寸：${size}
+・裝裱外框：${frame}
+・訂製數量：${qty} 幅
+・藏家聯絡：${contact}
+・細節備註：${notes}
+----------------------------------------
+（純手繪亞麻布刮刀厚塗油畫・獨一無二真跡訂製）`;
+
+      document.getElementById('order-summary-text').textContent = summary;
+      document.getElementById('order-result-box').classList.remove('hidden');
+      copyTextToClipboard(summary);
+      showToast('訂製單已生成並自動複製到剪貼簿！');
+    }
+
+    function copyOrderText() {
+      const text = document.getElementById('order-summary-text').textContent;
+      copyTextToClipboard(text);
+      showToast('已再次複製訂製單內容！');
+    }
+
+    // GitHub 部署助手視窗與狀態檢測
+    function toggleDeployModal() {
+      const modal = document.getElementById('deploy-modal');
+      modal.classList.toggle('hidden');
+    }
+
+    function initVideoStatusList() {
+      const list = document.getElementById('video-status-list');
+      list.innerHTML = artworksData.map(art => `
+        <div id="status-${art.file}" class="p-2.5 rounded-lg bg-ink-950 border border-stone-800 flex items-center justify-between">
+          <span class="font-mono text-stone-300">${art.file}</span>
+          <span class="status-dot px-1.5 py-0.5 rounded bg-stone-800 text-stone-400 text-[10px]">待部署</span>
+        </div>
+      `).join('');
+    }
+
+    function updateVideoStatusBadge(filename, isLoaded) {
+      const el = document.getElementById(`status-${filename}`);
+      if (!el) return;
+      const dot = el.querySelector('.status-dot');
+      if (isLoaded) {
+        el.className = 'p-2.5 rounded-lg bg-emerald-950/30 border border-emerald-500/40 flex items-center justify-between';
+        dot.className = 'status-dot px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300 text-[10px] font-semibold';
+        dot.textContent = '已就緒';
+      }
+    }
+
+    function copyGitCommands() {
+      const cmd = document.getElementById('git-cmd-block').textContent;
+      copyTextToClipboard(cmd);
+      showToast('已複製 Git 部署指令！');
+    }
+
+    // 剪貼簿複製工具（相容 iframe 環境）
+    function copyTextToClipboard(text) {
+      const textarea = document.createElement('textarea');
+      textarea.value = text;
+      textarea.style.position = 'fixed';
+      textarea.style.opacity = '0';
+      document.body.appendChild(textarea);
+      textarea.select();
+      try {
+        document.execCommand('copy');
+      } catch (err) {}
+      document.body.removeChild(textarea);
+    }
+
+    // 顯示 Toast 提示
+    let toastTimer = null;
+    function showToast(msg) {
+      const toast = document.getElementById('toast-notification');
+      document.getElementById('toast-text').textContent = msg;
+      toast.classList.remove('hidden');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => {
+        toast.classList.add('hidden');
+      }, 3200);
+    }
+
+    // 頁面啟動初始化
+    window.addEventListener('DOMContentLoaded', () => {
+      initVideoStatusList();
+      initHeroSwitcher();
+      renderGallery('all');
+      updateComparatorArtwork(0);
+    });
+  </script>
+</body>
+</html>
