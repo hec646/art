@@ -3,8 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>手繪藝術 — 中國戲曲刮刀厚塗油畫訂製 | 20×30cm・30×40cm 典藏訂製</title>
-  <!-- Tailwind CSS -->
+  <title>手繪藝術 — 中國戲曲刮刀厚塗油畫訂製 | 影片診斷與展示</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -31,10 +30,22 @@
     .canvas-texture { background-color: #161412; background-image: radial-gradient(rgba(212, 175, 55, 0.06) 1px, transparent 0); background-size: 24px 24px; }
     .gold-border { border: 1px solid rgba(212, 175, 55, 0.28); }
     .impasto-badge { background: linear-gradient(135deg, #c83e2b 0%, #872215 100%); }
-    .frame-walnut { border: 14px solid #3c2415; box-shadow: inset 0 0 12px rgba(0,0,0,0.85), 0 20px 40px rgba(0,0,0,0.75); }
   </style>
 </head>
 <body class="selection:bg-vermilion-500 selection:text-white">
+
+  <!-- 頂部即時診斷狀態列 -->
+  <div class="bg-ink-900 border-b border-gold-400/20 py-3 px-4 text-xs">
+    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3">
+      <div class="flex items-center gap-2 text-gold-300">
+        <i class="fa-solid fa-stethoscope text-vermilion-500"></i>
+        <span class="font-bold">GitHub Pages 影片即時診斷面板：</span>
+      </div>
+      <div id="diagnostics-bar" class="flex items-center gap-2 overflow-x-auto text-[11px] font-mono">
+        <span class="px-2 py-0.5 rounded bg-stone-800 text-stone-400">正在檢測 assets/ 影片...</span>
+      </div>
+    </div>
+  </div>
 
   <!-- 導覽列 -->
   <header class="sticky top-0 z-40 backdrop-blur-md bg-ink-950/85 border-b border-gold-400/20">
@@ -50,7 +61,7 @@
     </div>
   </header>
 
-  <!-- 主視覺區 -->
+  <!-- 主視覺播放器 -->
   <section class="relative canvas-texture py-12 sm:py-20 border-b border-gold-400/20">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
@@ -69,12 +80,15 @@
         <div class="lg:col-span-5 flex flex-col items-center">
           <div class="w-full max-w-[360px] rounded-2xl bg-ink-900 p-3 gold-border shadow-2xl">
             <div class="flex items-center justify-between mb-2 px-1">
-              <span id="hero-title-badge" class="text-xs font-oriental text-gold-300">典藏賞析 #01：青衣水袖</span>
+              <span id="hero-title-badge" class="text-xs font-oriental text-gold-300">實拍賞析 #01：青衣水袖</span>
             </div>
             <div class="relative aspect-[9/16] w-full rounded-xl overflow-hidden bg-ink-950 flex items-center justify-center">
-              <canvas id="hero-canvas" width="360" height="640" class="absolute inset-0 w-full h-full object-cover"></canvas>
-              <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex flex-col justify-end p-4">
-                <p class="text-xs text-gold-300 font-oriental">刮刀厚塗藝術意境預覽</p>
+              <video id="hero-video" class="w-full h-full object-cover" controls playsinline autoplay loop muted>
+                <source id="hero-source" src="assets/815912786.371579.mp4" type="video/mp4">
+              </video>
+              <div id="hero-error-overlay" class="absolute inset-0 bg-ink-950/90 flex flex-col items-center justify-center p-4 text-center hidden">
+                <i class="fa-solid fa-triangle-exclamation text-vermilion-500 text-3xl mb-2"></i>
+                <p class="text-xs text-stone-300 font-mono" id="hero-error-text">影片載入失敗 (404 / LFS 指標檔)</p>
               </div>
             </div>
             <div class="grid grid-cols-8 gap-1 mt-3" id="hero-switcher-btns"></div>
@@ -84,10 +98,10 @@
     </div>
   </section>
 
-  <!-- 8大經典系列藝廊 -->
+  <!-- 8支實拍影片藝廊 -->
   <section id="gallery" class="py-16 bg-ink-950">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <h2 class="font-oriental text-3xl font-bold text-stone-100 mb-8">八大經典戲曲・手繪油畫系列</h2>
+      <h2 class="font-oriental text-3xl font-bold text-stone-100 mb-8">八大經典戲曲・實拍影片藝廊</h2>
       <div id="gallery-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"></div>
     </div>
   </section>
@@ -121,34 +135,37 @@
   </section>
 
   <script>
+    // 使用您上傳成功的原始檔名清單
     const artworksData = [
-      { id: 1, title: '青衣水袖・藍袍旦角', palette: ['#0f6a8b', '#279dc4'], bg: '#3a4a52' },
-      { id: 2, title: '鳳冠點翠・花旦特寫', palette: ['#d13838', '#499ab8'], bg: '#523a3a' },
-      { id: 3, title: '緋紅戎裝・刀馬旦', palette: ['#b8231d', '#e03e2d'], bg: '#523432' },
-      { id: 4, title: '金縷流光・宮裝水袖', palette: ['#d49b35', '#8c5a1b'], bg: '#2b261f' },
-      { id: 5, title: '丹鳳青龍・關公武財神', palette: ['#137a8c', '#c92a2a'], bg: '#334742' },
-      { id: 6, title: '粉墨登場・黑臉淨角', palette: ['#1c1b1a', '#c92e2e'], bg: '#33302e' },
-      { id: 7, title: '素雅水袖・荀派旦角', palette: ['#e6e2d8', '#3c8c82'], bg: '#424a48' },
-      { id: 8, title: '翠袍紗帽・文官老生', palette: ['#108575', '#1eb092'], bg: '#334a42' }
+      { id: 1, file: '815912786.371579.mp4', title: '青衣水袖・藍袍旦角' },
+      { id: 2, file: '815912797.783649.mp4', title: '鳳冠點翠・花旦特寫' },
+      { id: 3, file: '815912812.396800.mp4', title: '緋紅戎裝・刀馬旦' },
+      { id: 4, file: '815912826.648221.mp4', title: '金縷流光・宮裝水袖' },
+      { id: 5, file: '815912839.592319.mp4', title: '丹鳳青龍・關公武財神' },
+      { id: 6, file: '815912859.228488.mp4', title: '粉墨登場・黑臉淨角' },
+      { id: 7, file: '815912859.460000.mp4', title: '素雅水袖・荀派旦角' },
+      { id: 8, file: '815912875.934846.mp4', title: '翠袍紗帽・文官老生' }
     ];
 
-    function drawArt(canvas, art) {
-      if (!canvas) return;
-      const ctx = canvas.getContext('2d');
-      const w = canvas.width;
-      const h = canvas.height;
-      ctx.fillStyle = art.bg;
-      ctx.fillRect(0, 0, w, h);
-
-      // 模擬刮刀厚塗油畫筆觸
-      for (let i = 0; i < 22; i++) {
-        ctx.fillStyle = art.palette[i % art.palette.length];
-        ctx.fillRect(w * 0.15 + (i * 12) % (w * 0.7), h * 0.2 + i * 22, 120, 28);
+    // 即時檢測每個影片檔的連線與載入狀態
+    async function runDiagnostics() {
+      const bar = document.getElementById('diagnostics-bar');
+      let html = '';
+      
+      for (let art of artworksData) {
+        const url = `assets/${art.file}`;
+        try {
+          const res = await fetch(url, { method: 'HEAD' });
+          if (res.ok) {
+            html += `<span class="px-2 py-0.5 rounded bg-emerald-950 text-emerald-300 border border-emerald-500/40">#0${art.id}: 200 OK</span>`;
+          } else {
+            html += `<span class="px-2 py-0.5 rounded bg-vermilion-950 text-vermilion-300 border border-vermilion-500/40" title="檔案不存在或路徑錯誤">#0${art.id}: ${res.status}</span>`;
+          }
+        } catch (e) {
+          html += `<span class="px-2 py-0.5 rounded bg-amber-950 text-amber-300 border border-amber-500/40">#0${art.id}: 載入異常</span>`;
+        }
       }
-      ctx.fillStyle = '#f3efe6';
-      ctx.font = 'bold 24px "Noto Serif TC", serif';
-      ctx.textAlign = 'center';
-      ctx.fillText(art.title, w / 2, h * 0.85);
+      bar.innerHTML = html;
     }
 
     function initHero() {
@@ -159,35 +176,45 @@
           0${art.id}
         </button>
       `).join('');
-      drawArt(document.getElementById('hero-canvas'), artworksData[0]);
+      switchHero(0);
     }
 
     function switchHero(idx) {
       const art = artworksData[idx];
-      document.getElementById('hero-title-badge').textContent = `典藏賞析 #0${art.id}：${art.title}`;
+      document.getElementById('hero-title-badge').textContent = `實拍賞析 #0${art.id}：${art.title}`;
       artworksData.forEach((_, i) => {
         document.getElementById(`hero-btn-${i}`).className = i === idx ? 'py-1 rounded text-xs font-mono transition border bg-gold-400 text-ink-950 font-bold border-gold-400' : 'py-1 rounded text-xs font-mono transition border bg-ink-800 text-stone-300 border-stone-700';
       });
-      drawArt(document.getElementById('hero-canvas'), art);
+
+      const video = document.getElementById('hero-video');
+      const source = document.getElementById('hero-source');
+      const errorOverlay = document.getElementById('hero-error-overlay');
+      
+      source.src = `assets/${art.file}`;
+      video.load();
+      video.play().then(() => {
+        errorOverlay.classList.add('hidden');
+      }).catch(err => {
+        errorOverlay.classList.remove('hidden');
+        document.getElementById('hero-error-text').textContent = `無法播放: ${art.file} (可能為LFS指標檔)`;
+      });
     }
 
     function renderGallery() {
       const grid = document.getElementById('gallery-grid');
       grid.innerHTML = artworksData.map(art => `
         <article class="rounded-2xl bg-ink-900 gold-border overflow-hidden flex flex-col justify-between">
-          <div class="relative aspect-[9/16] w-full bg-ink-950">
-            <canvas id="gallery-canvas-${art.id}" width="270" height="480" class="w-full h-full object-cover"></canvas>
-            <div class="absolute top-3 left-3 px-2 py-1 rounded bg-black/75 text-gold-300 font-mono text-xs">#0${art.id}</div>
+          <div class="relative aspect-[9/16] w-full bg-ink-950 flex items-center justify-center">
+            <video class="w-full h-full object-cover" controls playsinline loop muted preload="metadata">
+              <source src="assets/${art.file}" type="video/mp4">
+            </video>
+            <div class="absolute top-3 left-3 px-2 py-1 rounded bg-black/75 text-gold-300 font-mono text-xs pointer-events-none">#0${art.id}</div>
           </div>
           <div class="p-4">
             <h3 class="font-oriental text-lg font-bold text-stone-100">${art.title}</h3>
           </div>
         </article>
       `).join('');
-
-      artworksData.forEach(art => {
-        drawArt(document.getElementById(`gallery-canvas-${art.id}`), art);
-      });
     }
 
     function handleOrderSubmit(e) {
@@ -199,6 +226,7 @@
     }
 
     window.addEventListener('DOMContentLoaded', () => {
+      runDiagnostics();
       initHero();
       renderGallery();
     });
