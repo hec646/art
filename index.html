@@ -50,7 +50,7 @@
     </div>
   </header>
 
-  <!-- 主視覺播放器 -->
+  <!-- 主視覺區 -->
   <section class="relative canvas-texture py-12 sm:py-20 border-b border-gold-400/20">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
@@ -62,19 +62,20 @@
             以刀代筆，<br /><span class="text-transparent bg-clip-text bg-gradient-to-r from-gold-300 to-vermilion-500">凝練東方戲曲之魂</span>
           </h1>
           <p class="text-stone-300 text-base leading-relaxed">
-            融合西方油畫刮刀厚塗立體肌理與中國傳統戲曲寫意神韻，每一幅皆為獨一無二的手繪真跡。
+            融合西方油畫刮刀厚塗立體肌理與中國傳統戲曲寫意神韻，每一幅皆為獨一無二的手繪真跡。提供 20×30cm 與 30×40cm 典藏訂製。
           </p>
         </div>
 
         <div class="lg:col-span-5 flex flex-col items-center">
           <div class="w-full max-w-[360px] rounded-2xl bg-ink-900 p-3 gold-border shadow-2xl">
             <div class="flex items-center justify-between mb-2 px-1">
-              <span id="hero-video-badge" class="text-xs font-oriental text-gold-300">實拍創作 #01：青衣水袖</span>
+              <span id="hero-title-badge" class="text-xs font-oriental text-gold-300">典藏賞析 #01：青衣水袖</span>
             </div>
-            <div class="relative aspect-[9/16] w-full rounded-xl overflow-hidden bg-ink-950">
-              <video id="hero-video" class="w-full h-full object-cover" controls playsinline autoplay loop muted>
-                <source src="assets/815912786.371579.mp4" type="video/mp4">
-              </video>
+            <div class="relative aspect-[9/16] w-full rounded-xl overflow-hidden bg-ink-950 flex items-center justify-center">
+              <canvas id="hero-canvas" width="360" height="640" class="absolute inset-0 w-full h-full object-cover"></canvas>
+              <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex flex-col justify-end p-4">
+                <p class="text-xs text-gold-300 font-oriental">刮刀厚塗藝術意境預覽</p>
+              </div>
             </div>
             <div class="grid grid-cols-8 gap-1 mt-3" id="hero-switcher-btns"></div>
           </div>
@@ -83,11 +84,11 @@
     </div>
   </section>
 
-  <!-- 8支實拍影片畫廊 -->
+  <!-- 8大經典系列藝廊 -->
   <section id="gallery" class="py-16 bg-ink-950">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <h2 class="font-oriental text-3xl font-bold text-stone-100 mb-8">八大經典戲曲・實拍刀畫創作錄</h2>
-      <div id="video-gallery-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"></div>
+      <h2 class="font-oriental text-3xl font-bold text-stone-100 mb-8">八大經典戲曲・手繪油畫系列</h2>
+      <div id="gallery-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"></div>
     </div>
   </section>
 
@@ -120,69 +121,85 @@
   </section>
 
   <script>
-    // 直接對應您上傳成功的 8 個原始檔名
     const artworksData = [
-      { id: 1, file: '815912786.371579.mp4', title: '青衣水袖・藍袍旦角' },
-      { id: 2, file: '815912797.783649.mp4', title: '鳳冠點翠・花旦特寫' },
-      { id: 3, file: '815912812.396800.mp4', title: '緋紅戎裝・刀馬旦' },
-      { id: 4, file: '815912826.648221.mp4', title: '金縷流光・宮裝水袖' },
-      { id: 5, file: '815912839.592319.mp4', title: '丹鳳青龍・關公武財神' },
-      { id: 6, file: '815912859.228488.mp4', title: '粉墨登場・黑臉淨角' },
-      { id: 7, file: '815912859.460000.mp4', title: '素雅水袖・荀派旦角' },
-      { id: 8, file: '815912875.934846.mp4', title: '翠袍紗帽・文官老生' }
+      { id: 1, title: '青衣水袖・藍袍旦角', palette: ['#0f6a8b', '#279dc4'], bg: '#3a4a52' },
+      { id: 2, title: '鳳冠點翠・花旦特寫', palette: ['#d13838', '#499ab8'], bg: '#523a3a' },
+      { id: 3, title: '緋紅戎裝・刀馬旦', palette: ['#b8231d', '#e03e2d'], bg: '#523432' },
+      { id: 4, title: '金縷流光・宮裝水袖', palette: ['#d49b35', '#8c5a1b'], bg: '#2b261f' },
+      { id: 5, title: '丹鳳青龍・關公武財神', palette: ['#137a8c', '#c92a2a'], bg: '#334742' },
+      { id: 6, title: '粉墨登場・黑臉淨角', palette: ['#1c1b1a', '#c92e2e'], bg: '#33302e' },
+      { id: 7, title: '素雅水袖・荀派旦角', palette: ['#e6e2d8', '#3c8c82'], bg: '#424a48' },
+      { id: 8, title: '翠袍紗帽・文官老生', palette: ['#108575', '#1eb092'], bg: '#334a42' }
     ];
 
-    function initHeroSwitcher() {
+    function drawArt(canvas, art) {
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      const w = canvas.width;
+      const h = canvas.height;
+      ctx.fillStyle = art.bg;
+      ctx.fillRect(0, 0, w, h);
+
+      // 模擬刮刀厚塗油畫筆觸
+      for (let i = 0; i < 22; i++) {
+        ctx.fillStyle = art.palette[i % art.palette.length];
+        ctx.fillRect(w * 0.15 + (i * 12) % (w * 0.7), h * 0.2 + i * 22, 120, 28);
+      }
+      ctx.fillStyle = '#f3efe6';
+      ctx.font = 'bold 24px "Noto Serif TC", serif';
+      ctx.textAlign = 'center';
+      ctx.fillText(art.title, w / 2, h * 0.85);
+    }
+
+    function initHero() {
       const container = document.getElementById('hero-switcher-btns');
       container.innerHTML = artworksData.map((art, idx) => `
-        <button onclick="switchHeroVideo(${idx})" id="hero-btn-${idx}"
+        <button onclick="switchHero(${idx})" id="hero-btn-${idx}"
           class="py-1 rounded text-xs font-mono transition border ${idx === 0 ? 'bg-gold-400 text-ink-950 font-bold border-gold-400' : 'bg-ink-800 text-stone-300 border-stone-700'}">
           0${art.id}
         </button>
       `).join('');
+      drawArt(document.getElementById('hero-canvas'), artworksData[0]);
     }
 
-    function switchHeroVideo(index) {
-      const art = artworksData[index];
-      const heroVideo = document.getElementById('hero-video');
-      document.getElementById('hero-video-badge').textContent = `實拍創作 #0${art.id}：${art.title}`;
-      
-      artworksData.forEach((_, idx) => {
-        document.getElementById(`hero-btn-${idx}`).className = idx === index ? 'py-1 rounded text-xs font-mono transition border bg-gold-400 text-ink-950 font-bold border-gold-400' : 'py-1 rounded text-xs font-mono transition border bg-ink-800 text-stone-300 border-stone-700';
+    function switchHero(idx) {
+      const art = artworksData[idx];
+      document.getElementById('hero-title-badge').textContent = `典藏賞析 #0${art.id}：${art.title}`;
+      artworksData.forEach((_, i) => {
+        document.getElementById(`hero-btn-${i}`).className = i === idx ? 'py-1 rounded text-xs font-mono transition border bg-gold-400 text-ink-950 font-bold border-gold-400' : 'py-1 rounded text-xs font-mono transition border bg-ink-800 text-stone-300 border-stone-700';
       });
-
-      heroVideo.src = `assets/${art.file}`;
-      heroVideo.load();
-      heroVideo.play().catch(() => {});
+      drawArt(document.getElementById('hero-canvas'), art);
     }
 
     function renderGallery() {
-      const grid = document.getElementById('video-gallery-grid');
+      const grid = document.getElementById('gallery-grid');
       grid.innerHTML = artworksData.map(art => `
         <article class="rounded-2xl bg-ink-900 gold-border overflow-hidden flex flex-col justify-between">
           <div class="relative aspect-[9/16] w-full bg-ink-950">
-            <video class="w-full h-full object-cover" controls playsinline loop muted preload="metadata">
-              <source src="assets/${art.file}" type="video/mp4">
-            </video>
-            <div class="absolute top-3 left-3 z-10 px-2 py-1 rounded bg-black/75 text-gold-300 font-mono text-xs">#0${art.id}</div>
+            <canvas id="gallery-canvas-${art.id}" width="270" height="480" class="w-full h-full object-cover"></canvas>
+            <div class="absolute top-3 left-3 px-2 py-1 rounded bg-black/75 text-gold-300 font-mono text-xs">#0${art.id}</div>
           </div>
           <div class="p-4">
             <h3 class="font-oriental text-lg font-bold text-stone-100">${art.title}</h3>
           </div>
         </article>
       `).join('');
+
+      artworksData.forEach(art => {
+        drawArt(document.getElementById(`gallery-canvas-${art.id}`), art);
+      });
     }
 
     function handleOrderSubmit(e) {
       e.preventDefault();
-      const summary = `【訂製單】\n款式：${document.getElementById('order-style').value}\n尺寸：${document.getElementById('order-size').value}\n聯絡：${document.getElementById('order-contact').value}`;
+      const summary = `【手繪戲曲油畫訂製單】\n款式：${document.getElementById('order-style').value}\n尺寸：${document.getElementById('order-size').value}\n聯絡：${document.getElementById('order-contact').value}`;
       const box = document.getElementById('order-result-box');
       box.textContent = summary;
       box.classList.remove('hidden');
     }
 
     window.addEventListener('DOMContentLoaded', () => {
-      initHeroSwitcher();
+      initHero();
       renderGallery();
     });
   </script>
